@@ -1,16 +1,17 @@
 <template>
   <article class="post">
-    <h4>Lorem Title</h4>
+    <h4>{{ activity.title }}</h4>
     <div class="media">
       <div class="media-left">
         <p class="image is-32x32">
-          <img src="../assets/user.png">
+          <img src="../assets/user.png" />
         </p>
       </div>
       <div class="media-content">
         <div class="content">
           <p>
-            <a href="#">Filip Jerga</a> updated 2 minutes ago &nbsp;
+            <a href="#">Filip Jerga</a> updated {{ activity.createdAt }} minutes
+            ago &nbsp;
           </p>
         </div>
       </div>
@@ -26,13 +27,12 @@ export default {
   props: {
     activity: {
       type: Object,
-      required: true 
+      required: true,
     },
   },
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

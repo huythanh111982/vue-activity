@@ -1,65 +1,24 @@
 <template>
   <div id="activityApp">
-    <nav class="navbar is-white topNav">
-      <div class="container">
-        <div class="navbar-brand">
-          <h1>Activity Planner</h1>
-        </div>
-      </div>
-    </nav>
-    <nav class="navbar is-white">
-      <div class="container">
-        <div class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item is-active" href="#">Newest</a>
-            <a class="navbar-item" href="#">In Progress</a>
-            <a class="navbar-item" href="#">Finished</a>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <!-- Header Compnent -->
+    <NavBar />
+    <!-- End Header Component -->
     <section class="container">
       <div class="columns">
         <div class="column is-3">
-          <a class="button is-primary is-block is-alt is-large" href="#"
-            >New Activity</a
-          >
-          <div class="create-form">
-            <h2>Create Activity</h2>
-            <form>
-              <div class="field">
-                <label class="label">Title</label>
-                <div class="control">
-                  <input class="input" type="text" placeholder="Read a Book" />
-                </div>
-              </div>
-              <div class="field">
-                <label class="label">Notes</label>
-                <div class="control">
-                  <textarea
-                    class="textarea"
-                    placeholder="Write some notes here"
-                  ></textarea>
-                </div>
-              </div>
-              <div class="field is-grouped">
-                <div class="control">
-                  <button class="button is-link">Create Activity</button>
-                </div>
-                <div class="control">
-                  <button class="button is-text">Cancel</button>
-                </div>
-              </div>
-            </form>
-          </div>
+          <!-- ActivityCreate Component -->
+          <ActivityCreate :newActivity="newActivity"></ActivityCreate>
+          <!-- End ActivityCreate Component -->
         </div>
         <div class="column is-9">
           <div class="box content">
+            <!-- ActivityItem Component -->
             <ActivityItem
               v-for="activity in activities"
               :key="activity.id"
               :activity="activity"
             ></ActivityItem>
+            <!-- End ActivityItem Component -->
           </div>
         </div>
       </div>
@@ -69,11 +28,14 @@
 
 <script>
 import ActivityItem from "./components/ActivityItem.vue";
-
+import NavBar from "@/components/NavBar.vue";
+import ActivityCreate from "@/components/ActivityCreate.vue";
 export default {
   name: "app",
   components: {
     ActivityItem,
+    NavBar,
+    ActivityCreate,
   },
   data() {
     return {
@@ -138,28 +100,11 @@ footer {
 .example-wrapper {
   margin-left: 30px;
 }
-.topNav {
-  border-top: 5px solid #3498db;
-}
-.topNav .container {
-  border-bottom: 1px solid #e6eaee;
-}
+
 .container .columns {
   margin: 3rem 0;
 }
-.navbar-menu .navbar-item {
-  padding: 0 2rem;
-}
-aside.menu {
-  padding-top: 3rem;
-}
-aside.menu .menu-list {
-  line-height: 1.5;
-}
-aside.menu .menu-label {
-  padding-left: 10px;
-  font-weight: 700;
-}
+
 .button.is-primary.is-alt {
   background: #00c6ff;
   background: -webkit-linear-gradient(to bottom, #0072ff, #00c6ff);
@@ -187,12 +132,8 @@ article.post:last-child {
   padding-bottom: 0;
   border-bottom: none;
 }
-.menu-list li {
-  padding: 5px;
-}
-.navbar-brand > h1 {
-  font-size: 31px;
-  padding: 20px;
+.content {
+  text-align: left;
 }
 .create-form {
   padding: 15px;
