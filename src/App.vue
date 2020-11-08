@@ -7,8 +7,8 @@
       <div class="columns">
         <div class="column is-3">
           <!-- ActivityCreate Component -->
-          <ActivityCreate :newActivity="newActivity"></ActivityCreate>
-          <!-- End ActivityCreate Component -->
+          <ActivityCreate :new-activity="newActivity" />
+        <!-- End ActivityCreate Component -->
         </div>
         <div class="column is-9">
           <div class="box content">
@@ -16,9 +16,8 @@
             <ActivityItem
               v-for="activity in activities"
               :key="activity.id"
-              :activity="activity"
-            ></ActivityItem>
-            <!-- End ActivityItem Component -->
+              :activity="activity" />
+          <!-- End ActivityItem Component -->
           </div>
         </div>
       </div>
@@ -30,8 +29,13 @@
 import ActivityItem from "./components/ActivityItem.vue";
 import NavBar from "@/components/NavBar.vue";
 import ActivityCreate from "@/components/ActivityCreate.vue";
+import {
+  fetchActivities,
+  fetchUser,
+  fetchCatigories
+} from "@/api";
 export default {
-  name: "app",
+  name: "App",
   components: {
     ActivityItem,
     NavBar,
@@ -43,39 +47,37 @@ export default {
         title: "",
         notes: "",
       },
-      user: {
-        name: "Filip Jerga",
-        id: "-Aj34jknvncx98812",
-      },
-      activities: {
-        1546968934: {
-          id: "1546968934",
-          title: "Learn Vue.js",
-          notes: "I started today and it was not good.",
-          progress: 0,
-          category: "1546969049",
-          createdAt: 1546969144391,
-          updatedAt: 1546969144391,
-        },
-        1546969212: {
-          id: "1546969212",
-          title: "Read Witcher Books",
-          notes: "These books are super nice",
-          progress: 0,
-          category: "1546969049",
-          createdAt: 1546969144391,
-          updatedAt: 1546969144391,
-        },
-      },
-      categories: {
-        1546969049: {
-          text: "books",
-        },
-        1546969225: {
-          text: "movies",
-        },
-      },
+      user: {},
+      activities: {},
+      categories: {},
     };
+  },
+  beforeCreate() {
+    console.log("beforeCreate called");
+  },
+  created() {
+    this.activities = fetchActivities();
+    this.user = fetchUser();
+    this.categories = fetchCatigories();
+    console.log(this.activities);
+  },
+  beforeMount() {
+    console.log("beforeMount called");
+  },
+  mounted() {
+    console.log("Mounted called");
+  },
+  beforeUpdate() {
+    console.log("beforeUpdate called");
+  },
+  updated() {
+    console.log("Updated called");
+  },
+  beforeDestroy() {
+    console.log("Updated called");
+  },
+  destroyed() {
+    console.log("Destroyed called");
   },
 };
 </script>
@@ -89,14 +91,17 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
 html,
 body {
   font-family: "Open Sans", serif;
   background: #f2f6fa;
 }
+
 footer {
   background-color: #f2f6fa !important;
 }
+
 .example-wrapper {
   margin-left: 30px;
 }
@@ -114,27 +119,33 @@ footer {
   height: 3rem;
   line-height: 2.8;
 }
+
 .media-left img {
   border-radius: 50%;
 }
+
 .media-content p {
   font-size: 14px;
   line-height: 2.3;
   font-weight: 700;
   color: #8f99a3;
 }
+
 article.post {
   margin: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #e6eaee;
 }
+
 article.post:last-child {
   padding-bottom: 0;
   border-bottom: none;
 }
+
 .content {
   text-align: left;
 }
+
 .create-form {
   padding: 15px;
   border: 1px solid #ddd;

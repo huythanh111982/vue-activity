@@ -1,12 +1,12 @@
 <template>
   <div class="activityCreateForm">
     <a
-      @click="toggleDisplayForm"
       class="button is-primary is-block is-alt is-large"
       href="#"
-      >New Activity</a
-    >
-    <div v-if="isFromDisplay" class="create-form">
+      @click="toggleDisplayForm">New Activity</a>
+    <div
+      v-if="isFromDisplay"
+      class="create-form">
       <h2>Create Activity</h2>
       <form>
         <div class="field">
@@ -16,8 +16,7 @@
               v-model="newActivity.title"
               class="input"
               type="text"
-              placeholder="Read a Book"
-            />
+              placeholder="Read a Book">
           </div>
         </div>
         <div class="field">
@@ -26,18 +25,24 @@
             <textarea
               v-model="newActivity.notes"
               class="textarea"
-              placeholder="Write some notes here"
-            ></textarea>
+              placeholder="Write some notes here" />
           </div>
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <button @click="createForm" class="button is-link">
+            <button
+              class="button is-link"
+              :disabled="!checkisForm"
+              @click="createForm">
               Create Activity
             </button>
           </div>
           <div class="control">
-            <button @click="cancelFrom" class="button is-text">Cancel</button>
+            <button
+              class="button is-text"
+              @click="cancelFrom">
+              Cancel
+            </button>
           </div>
         </div>
       </form>
@@ -58,17 +63,26 @@ export default {
       isFromDisplay: false,
     };
   },
+  computed: {
+    checkisForm(){
+      console.log('Calling is form valid !!!')
+      return this.newActivity.title && this.newActivity.notes;
+    }
+  },
   methods: {
     toggleDisplayForm() {
       this.isFromDisplay = !this.isFromDisplay;
     },
     createForm() {
-      // eslint-disable-next-line no-console
       console.log(this.newActivity);
     },
     cancelFrom() {
       this.isFromDisplay = false;
     },
+    // checkisForm(){
+    //   console.log('Calling is form valid !!!')
+    //   return this.newActivity.title && this.newActivity.notes;
+    // }
   },
 };
 </script>
