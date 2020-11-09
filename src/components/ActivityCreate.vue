@@ -20,6 +20,25 @@
           </div>
         </div>
         <div class="field">
+          <label class="label">Category</label>
+          <div class="control">
+            <select
+              v-model="newActivity.category"
+              class="select">
+              <option
+                value=""
+                disabled>
+                Please select one
+              </option>
+              <option
+                v-for="category in categories"
+                :key="category.id">
+                {{ category.text }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
           <label class="label">Notes</label>
           <div class="control">
             <textarea
@@ -57,6 +76,10 @@ export default {
       type: Object,
       required: true,
     },
+    categories:{
+      type:Object,
+      required:true
+    }
   },
   data() {
     return {

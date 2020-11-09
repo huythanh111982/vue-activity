@@ -3,7 +3,7 @@
     <nav class="navbar is-white topNav">
       <div class="container">
         <div class="navbar-brand">
-          <h1>Activity Planner</h1>
+          <h1>{{ fullName }}</h1>
         </div>
       </div>
     </nav>
@@ -31,7 +31,23 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    appName: {
+      type: String,
+      required:true 
+    },
+    creator:{
+      type:String,
+      required:true
+    }
+  },
+  computed: {
+    fullName() {
+      return this.appName + 'by' + this.creator 
+    }
+  },
+};
 </script>
 
 <style lang="css">

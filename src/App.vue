@@ -1,13 +1,17 @@
 <template>
   <div id="activityApp">
     <!-- Header Compnent -->
-    <NavBar />
+    <NavBar
+      :app-name="appName"
+      :creator="creator" />
     <!-- End Header Component -->
     <section class="container">
       <div class="columns">
         <div class="column is-3">
           <!-- ActivityCreate Component -->
-          <ActivityCreate :new-activity="newActivity" />
+          <ActivityCreate
+            :new-activity="newActivity"
+            :categories="categories" />
         <!-- End ActivityCreate Component -->
         </div>
         <div class="column is-9">
@@ -17,7 +21,9 @@
               v-for="activity in activities"
               :key="activity.id"
               :activity="activity" />
-          <!-- End ActivityItem Component -->
+            <!-- End ActivityItem Component -->
+            <div class="activity-length">Currenly {{ activityLength }} activities </div>
+            <div class="activity-movation">{{ activityMovation }}</div>
           </div>
         </div>
       </div>
@@ -43,41 +49,37 @@ export default {
   },
   data() {
     return {
+      creator:"HuyKiara",
+      appName:"Activity Planner",
       newActivity: {
         title: "",
         notes: "",
+        category:""
       },
       user: {},
       activities: {},
       categories: {},
     };
   },
-  beforeCreate() {
-    console.log("beforeCreate called");
+  computed: {
+    activityLength(){
+      return Object.keys(this.activities).length;
+    },
+    activityMovation(){
+      if(this.activityLength && this.activityLength < 5){
+        return "Nice to see some goals";
+      }else if(this.activityLength >= 5){
+        return "So many activities! Good jobs"
+      }else{
+        return "No activities, so sad :)"
+      }
+    }
   },
   created() {
     this.activities = fetchActivities();
     this.user = fetchUser();
     this.categories = fetchCatigories();
     console.log(this.activities);
-  },
-  beforeMount() {
-    console.log("beforeMount called");
-  },
-  mounted() {
-    console.log("Mounted called");
-  },
-  beforeUpdate() {
-    console.log("beforeUpdate called");
-  },
-  updated() {
-    console.log("Updated called");
-  },
-  beforeDestroy() {
-    console.log("Updated called");
-  },
-  destroyed() {
-    console.log("Destroyed called");
   },
 };
 </script>
@@ -151,5 +153,11 @@ article.post:last-child {
   border: 1px solid #ddd;
   background-color: #fafafa;
   text-align: left;
+}
+.activity-length{
+  display: inline-block;
+}
+.activity-movation{
+  float:right;
 }
 </style>
