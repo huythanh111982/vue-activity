@@ -52,14 +52,14 @@
             <button
               class="button is-link"
               :disabled="!checkisForm"
-              @click="createForm">
+              @click.prevent="createActivity">
               Create Activity
             </button>
           </div>
           <div class="control">
             <button
               class="button is-text"
-              @click="cancelFrom">
+              @click.prevent="cancelFrom">
               Cancel
             </button>
           </div>
@@ -70,12 +70,9 @@
 </template>
 
 <script>
+import { createActivityAPI } from "@/api";
 export default {
   props: {
-    newActivity: {
-      type: Object,
-      required: true,
-    },
     categories:{
       type:Object,
       required:true
@@ -84,11 +81,15 @@ export default {
   data() {
     return {
       isFromDisplay: false,
+      newActivity: {
+        title: "",
+        notes: "",
+        category:""
+      },
     };
   },
   computed: {
     checkisForm(){
-      console.log('Calling is form valid !!!')
       return this.newActivity.title && this.newActivity.notes;
     }
   },
@@ -96,16 +97,16 @@ export default {
     toggleDisplayForm() {
       this.isFromDisplay = !this.isFromDisplay;
     },
-    createForm() {
-      console.log(this.newActivity);
+    createActivity() {
+      createActivityAPI(this.newActivity)
+      .then(activity => {
+        this.$emit('createActivity', {...activity});
+      });
+      
     },
     cancelFrom() {
       this.isFromDisplay = false;
     },
-    // checkisForm(){
-    //   console.log('Calling is form valid !!!')
-    //   return this.newActivity.title && this.newActivity.notes;
-    // }
   },
 };
 </script>
