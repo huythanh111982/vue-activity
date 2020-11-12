@@ -1,3 +1,4 @@
+import cuid from "cuid";
 // Fetch Data Activity
 export const fetchActivities = () => {
   return {
@@ -38,4 +39,15 @@ export const fetchCatigories = () => {
       text: "movies",
     }
   }
+}
+
+// Create New Activity
+export const createActivityAPI = (newActivity) => {
+  newActivity.id = cuid();
+  newActivity.progress = 0 ;
+  newActivity.createdAt = new Date().getTime();
+  newActivity.updatedAt = new Date().getTime();
+  return new Promise((resolve)=>{
+    return resolve(newActivity);
+  })
 }

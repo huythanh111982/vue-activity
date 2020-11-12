@@ -10,8 +10,8 @@
         <div class="column is-3">
           <!-- ActivityCreate Component -->
           <ActivityCreate
-            :new-activity="newActivity"
-            :categories="categories" />
+            :categories="categories" 
+            @createActivity="addActivity" />
         <!-- End ActivityCreate Component -->
         </div>
         <div class="column is-9">
@@ -20,7 +20,8 @@
             <ActivityItem
               v-for="activity in activities"
               :key="activity.id"
-              :activity="activity" />
+              :activity="activity" 
+            />
             <!-- End ActivityItem Component -->
             <div class="activity-length">Currenly {{ activityLength }} activities </div>
             <div class="activity-movation">{{ activityMovation }}</div>
@@ -32,6 +33,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import ActivityItem from "./components/ActivityItem.vue";
 import NavBar from "@/components/NavBar.vue";
 import ActivityCreate from "@/components/ActivityCreate.vue";
@@ -51,11 +53,6 @@ export default {
     return {
       creator:"HuyKiara",
       appName:"Activity Planner",
-      newActivity: {
-        title: "",
-        notes: "",
-        category:""
-      },
       user: {},
       activities: {},
       categories: {},
@@ -79,7 +76,14 @@ export default {
     this.activities = fetchActivities();
     this.user = fetchUser();
     this.categories = fetchCatigories();
-    console.log(this.activities);
+  },
+  methods: {
+    addActivity(newActivity){
+      // this.activities[newActivity.id] = newActivity;
+      Vue.set(this.activities,newActivity.id,newActivity);
+      debugger;
+      console.log(newActivity);
+    }
   },
 };
 </script>
