@@ -73,7 +73,10 @@ export default {
     }
   },
   created() {
-    this.activities = fetchActivities();
+    fetchActivities()
+      .then(dataAPI => {
+        this.activities = dataAPI;
+      })
     this.user = fetchUser();
     this.categories = fetchCatigories();
   },
@@ -81,8 +84,6 @@ export default {
     addActivity(newActivity){
       // this.activities[newActivity.id] = newActivity;
       Vue.set(this.activities,newActivity.id,newActivity);
-      debugger;
-      console.log(newActivity);
     }
   },
 };
