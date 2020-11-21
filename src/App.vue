@@ -30,7 +30,8 @@
                 v-for="activity in activities"
                 :key="activity.id"
                 :activity="activity"
-                :categories="categories" />
+                :categories="categories"
+                @activityDeleted="handleActivityDelete" />
             <!-- End ActivityItem Component -->
             </div>
             <div v-if="isFetching">
@@ -104,6 +105,9 @@ export default {
     addActivity(newActivity) {
       // this.activities[newActivity.id] = newActivity;
       Vue.set(this.activities, newActivity.id, newActivity);
+    },
+    handleActivityDelete(currentActivity){
+      console.log(currentActivity);
     }
   },
 };
