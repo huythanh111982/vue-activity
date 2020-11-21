@@ -98,8 +98,10 @@ export default {
       this.isFromDisplay = !this.isFromDisplay;
     },
     createActivity() {
-      createActivityAPI(this.newActivity)
+      createActivityAPI({...this.newActivity})
       .then(activity => {
+        this.resetForm();
+        this.isFromDisplay = false;
         this.$emit('createActivity', {...activity});
       });
       
@@ -107,6 +109,11 @@ export default {
     cancelFrom() {
       this.isFromDisplay = false;
     },
+    resetForm(){
+      this.newActivity.title = "";
+      this.newActivity.category = "";
+      this.newActivity.notes = "";
+    }
   },
 };
 </script>

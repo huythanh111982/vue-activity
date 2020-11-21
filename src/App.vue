@@ -10,21 +10,32 @@
         <div class="column is-3">
           <!-- ActivityCreate Component -->
           <ActivityCreate
-            :categories="categories" 
+            :categories="categories"
             @createActivity="addActivity" />
         <!-- End ActivityCreate Component -->
         </div>
         <div class="column is-9">
-          <div class="box content">
-            <!-- ActivityItem Component -->
-            <ActivityItem
-              v-for="activity in activities"
-              :key="activity.id"
-              :activity="activity" 
-            />
+          <div
+            class="box content"
+            :class="{ fetching:isFetching, 'has-error':error }">
+            <div v-if="error">
+              {{ error }}
+            </div>
+            <div v-else>
+              <div v-if="isFetching">
+                Loadding ...
+              </div>
+              <!-- ActivityItem Component -->
+              <ActivityItem
+                v-for="activity in activities"
+                :key="activity.id"
+                :activity="activity" />
             <!-- End ActivityItem Component -->
-            <div class="activity-length">Currenly {{ activityLength }} activities </div>
-            <div class="activity-movation">{{ activityMovation }}</div>
+            </div>
+            <div v-if="isFetching">
+              <div class="activity-length">Currenly {{ activityLength }} activities </div>
+              <div class="activity-movation">{{ activityMovation }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -51,39 +62,47 @@ export default {
   },
   data() {
     return {
-      creator:"HuyKiara",
-      appName:"Activity Planner",
+      creator: "HuyKiara",
+      appName: "Activity Planner",
+      isFetching: false,
+      error: null,
       user: {},
       activities: {},
       categories: {},
     };
   },
   computed: {
-    activityLength(){
+    activityLength() {
       return Object.keys(this.activities).length;
     },
-    activityMovation(){
-      if(this.activityLength && this.activityLength < 5){
+    activityMovation() {
+      if (this.activityLength && this.activityLength < 5) {
         return "Nice to see some goals";
-      }else if(this.activityLength >= 5){
+      } else if (this.activityLength >= 5) {
         return "So many activities! Good jobs"
-      }else{
+      } else {
         return "No activities, so sad :)"
       }
     }
   },
   created() {
+    this.isFetching = true;
     fetchActivities()
       .then(dataAPI => {
         this.activities = dataAPI;
+        this.isFetching = false;
+      })
+      .catch(err => {
+        this.error = err;
+        this.isFetching = false;
       })
     this.user = fetchUser();
     this.categories = fetchCatigories();
   },
   methods: {
-    addActivity(newActivity){
+    addActivity(newActivity) {
       // this.activities[newActivity.id] = newActivity;
-      Vue.set(this.activities,newActivity.id,newActivity);
+      Vue.set(this.activities, newActivity.id, newActivity);
     }
   },
 };
@@ -159,10 +178,22 @@ article.post:last-child {
   background-color: #fafafa;
   text-align: left;
 }
-.activity-length{
+
+.activity-length {
   display: inline-block;
 }
-.activity-movation{
-  float:right;
+
+.activity-movation {
+  float: right;
+}
+
+.fetching {
+  color: green;
+  border: 2px solid green;
+}
+
+.has-error {
+  color: red;
+  border: 2px solid red;
 }
 </style>

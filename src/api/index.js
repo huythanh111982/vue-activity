@@ -19,11 +19,22 @@ const activities = {
     updatedAt: 1546969144391,
   },
 }
+const canContinue = () => {
+  const rndNumber = Math.floor(Math.random() * 10);
+  if(rndNumber > 5){
+     return true
+  } 
+  return false
+}
 // Fetch Data Activity
 export const fetchActivities = () => {
   return new Promise((resolve,reject) => {
     setTimeout(() => {
-      resolve(activities)
+      if(canContinue()){
+        resolve(activities)
+      }else {
+        reject('Can not fetch activities')
+      }
     }, 1000);
   })
 }
