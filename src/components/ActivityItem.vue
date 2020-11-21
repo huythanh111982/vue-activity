@@ -1,6 +1,6 @@
 <template>
   <article class="post">
-    <h4>{{ activity.title }}</h4>
+    <h4>{{ activity.title | uppercase }}</h4>
     <p>{{ capitilize(categories[activity.category].text) }}</p>
     <p>{{ activity.notes }}</p>
     <div class="media">
@@ -12,8 +12,7 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <a href="#">Filip Jerga</a> updated {{ activity.createdAt }} minutes
-            ago &nbsp;
+            <a href="#">Filip Jerga</a> updated {{ activity.createdAt | prettyTime }}
           </p>
         </div>
       </div>
