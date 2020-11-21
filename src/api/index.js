@@ -4,7 +4,7 @@ const activities = {
     id: "1546968934",
     title: "Learn Vue.js",
     notes: "I started today and it was not good.",
-    progress: 0,
+    progress: 60,
     category: "1546969049",
     createdAt: 1546969144391,
     updatedAt: 1546969144391,
@@ -48,11 +48,13 @@ export const fetchUser = () => {
 // Fetch Data Catigories
 export const fetchCatigories = () => {
   return {
-    1546969049: {
+    '1546969049': {
       text: "books",
+      id:'1546969049'
     },
-    1546969225: {
+    '1546969225': {
       text: "movies",
+      id:'1546969225'
     }
   }
 }

@@ -1,6 +1,8 @@
 <template>
   <article class="post">
     <h4>{{ activity.title }}</h4>
+    <p>{{ capitilize(categories[activity.category].text) }}</p>
+    <p>{{ activity.notes }}</p>
     <div class="media">
       <div class="media-left">
         <p class="image is-32x32">
@@ -16,7 +18,8 @@
         </div>
       </div>
       <div class="media-right">
-        <span>Progress Bar Here</span>
+        <span><span :class="'color-' + activityProgress">{{ activity.progress }} %</span></span>
+        <!-- <span><span :style="{'color':activityProgress}">{{ activity.progress }} %</span></span> -->
       </div>
     </div>
   </article>
@@ -29,10 +32,42 @@ export default {
       type: Object,
       required: true,
     },
+    categories: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    activityProgress() {
+      const progress = this.activity.progress;
+      if(progress <=0){
+        return 'red'
+      }else if (progress <=50){
+        return 'orange'
+      }else{
+        return 'green'
+      }
+    }
+  },
+  methods: {
+    capitilize(word) {
+      if(word && typeof word === 'string'){
+        return word.charAt(0).toUpperCase() + word.slice(1) ;
+      }
+    }
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.color-red{
+  color: red;
+}
+.color-orange{
+  color:orange
+}
+.color-green{
+  color:green
+}
 </style>
