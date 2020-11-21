@@ -29,7 +29,8 @@
               <ActivityItem
                 v-for="activity in activities"
                 :key="activity.id"
-                :activity="activity" />
+                :activity="activity"
+                :categories="categories" />
             <!-- End ActivityItem Component -->
             </div>
             <div v-if="isFetching">
